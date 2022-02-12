@@ -1,11 +1,10 @@
 # Python CircleCI 2.0 configuration file
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.9
+      - image: circleci/python:3.7.4
     working_directory: ~/repo
-
     steps:
       # Step 1: obtain repo from Github
       - checkout
@@ -16,11 +15,22 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-
       # Step 3: run linter and tests
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             flake8 --exclude=venv* --statistics
-            pytest -v --cov=calculator
+            pytest -v --cov=calculatorl
+      # Step 4: Store the results and artifacts
+      - run:
+          name: Creating Dummy Artifacts
+          command: |
+            echo "my artifact file" > ~/repo/art-1;
+            mkdir ~/repo/artifacts;
+            echo "my artifact files in a dir" > ~/repo/artifacts/art-2;
+            - store_artifacts:
+                path: ~/repo/art-1
+                destination: artifact-file
+            - store_artifacts:
+                path: ~/repo/artifacts
