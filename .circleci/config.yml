@@ -21,7 +21,7 @@ jobs:
           command: |
             . venv/bin/activate
             flake8 --exclude=venv* --statistics
-            pytest -v --cov=calculatorl
+            pytest -v --cov=calculator
       # Step 4: Store the results and artifacts
       - run:
           name: Creating Dummy Artifacts
